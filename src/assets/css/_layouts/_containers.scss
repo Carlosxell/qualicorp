@@ -1,0 +1,23 @@
+@import '../_utilities/_exports';
+
+.l-app {
+  align-items: center;
+  background-color: $color-light;
+  display: flex;
+  justify-content: center;
+  max-width: 100%;
+  min-height: 100vh;
+  position: relative;
+  padding: pxToRem(20) pxToRem(8) 0;
+  width: 100vw;
+}
+
+.l-page {
+  margin: pxToRem(32) auto 0;
+  max-width: pxToRem(768);
+  width: 100%;
+
+  &--home {
+    @extend .l-page;
+  }
+}

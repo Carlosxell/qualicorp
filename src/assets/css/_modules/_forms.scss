@@ -1,0 +1,33 @@
+@import '../_utilities/_exports';
+
+.m-inputPlaceholder {
+  appearance: none;
+  border: pxToRem(2) solid $color-gray;
+  border-radius: pxToRem(4);
+  background-color: transparent;
+  color: $color-dark;
+  display: block;
+  font-weight: 600;
+  outline: none;
+  padding: pxToRem(12);
+  width: 100%;
+
+  &:focus,
+  &:active {
+    outline: none;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: .76;
+  }
+
+  @include placeholder {
+    color: $color-gray;
+  }
+}
+
+.m-input {
+  @extend .m-inputPlaceholder;
+}
+
