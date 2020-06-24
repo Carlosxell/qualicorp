@@ -10,5 +10,5 @@ export function getEntities(prof, uf, city) {
 }
 
 export function getPlans(postObj) {
-  return axios.post(url(`plano/?api-key=${keys.plano}`), postObj, { headers }).then(res => res.data);
+  return axios.post(url(`plano?api-key=${keys.plano}`), postObj, { headers }).then(res => res.data);
 }

@@ -179,7 +179,7 @@
       },
       async sendForm() {
         this.sendingForm = true;
-        let obj = { ...this.formObj };
+        let obj = { ...this.formObj, datanascimento: [this.formObj.datanascimento] };
 
         try {
           await getPlans(obj).then(res => {
