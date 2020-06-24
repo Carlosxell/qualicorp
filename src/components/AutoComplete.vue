@@ -16,16 +16,18 @@
              type="text"
              v-model="selected">
       <ul class="c-autoComplete_list"
-          :class="{ 'c-autoComplete_list--open': onFocus }">
+          :class="{ 'c-autoComplete_list--open': onFocus }"
+          v-if="dataList.length">
         <li @click="setItem(option)"
             class="c-autoComplete_list_item"
             :class="{ 'c-autoComplete_list_item--active': ind === selectedInd }"
             :key="ind"
-            v-for="(option, ind) in listFiltered">{{ option[defaults.labelItem] }}</li>
+            v-for="(option, ind) in listFiltered"
+            v-html="option[defaults.labelItem]"></li>
       </ul>
       <p class="c-autoComplete_noItems"
          :class="{ 'c-autoComplete_noItems--show': onFocus && !dataList.length }"
-         v-if="!dataList.length">{{ defaults.fallback }}</p>
+         v-else>{{ defaults.fallback }}</p>
     </div>
   </div>
 </template>
@@ -157,7 +159,7 @@
       padding: pxToRem(8);
       position: absolute;
       transform: scaleY(0);
-      transition: transform .12s .15s linear, height .15s .18s ease-in-out;
+      transition: transform .12s .20s linear, height .12s .20s ease-in-out;
       transform-origin: top;
       width: 100%;
       z-index: 100;
@@ -196,7 +198,7 @@
       margin-top: pxToRem(8);
       position: absolute;
       transform: scaleY(0);
-      transition: transform .12s .15s linear, height .15s .18s ease-in-out;
+      transition: transform .12s linear, height .15s ease-in-out;
       text-align: center;
 
       &--show {

@@ -6,7 +6,7 @@ export function getJobs(uf, city) {
 }
 
 export function getEntities(prof, uf, city) {
-  return axios.get(url(`entidades/${prof}/${uf}/${city}?api-key=${keys.entidade}`)).then(res => res.data);
+  return axios.get(url(`entidade/${prof}/${uf}/${city}?api-key=${keys.entidade}`)).then(res => res.data);
 }
 
 export function getPlans(postObj) {
