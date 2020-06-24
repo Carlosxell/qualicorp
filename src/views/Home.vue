@@ -1,9 +1,9 @@
 <template>
   <div class="l-page--home">
     <form @submit.prevent="sendForm"
-          class="form columns"
+          class="form l-grid"
           novalidate>
-      <div class="column is-6-tablet is-4-desktop">
+      <div class="l-col--12 l-col--Xs6 l-col--Md4">
         <div class="field">
           <label class="label is-small"
                  for="state">Estado</label>
@@ -22,13 +22,13 @@
         </div>
       </div>
 
-      <div class="column is-6-tablet is-4-desktop">
+      <div class="l-col--12 l-col--Xs6 l-col--Md4">
         <AutoComplete @OnChange="changeCity"
                       :data-list="cities"
                       :data-prop="cityInfo" />
       </div>
 
-      <div class="column is-6-tablet is-4-desktop">
+      <div class="l-col--12 l-col--Xs6 l-col--Md4">
         <AutoComplete @OnChange="changeJob"
                       :data-list="jobs"
                       :data-prop="jobInfo" />
@@ -68,6 +68,8 @@
     data: () => {
       return {
         cidade: null,
+        entidade: null,
+        profissao: null,
         formObj: {
           uf: '',
           value: '',
@@ -85,21 +87,27 @@
       this.getInitialData();
     },
     methods: {
-      changeJob(val) {},
-      clearCityStg(str) {
-        return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(' ', '%20');
+      changeJob(val) {
+        this.formObj.profissao = val.nome;
+      },
+      clearCity() {
+        this.cidade = null;
+        this.formObj.cidade = '';
       },
       async changeCity(val) {
-        let cidade = this.clearCityStg(val.nome);
+        let { clearStrCharacters, } = this.$options.filters;
+        let cidade = clearStrCharacters(val.nome).toLowerCase();
+
+        if (!val.nome) { return this.clearCity(); }
+
         this.cidade = val;
         this.formObj.cidade = val.nome;
         await getJobs(this.formObj.uf, cidade).then(res => this.jobs = res);
       },
       async changeState() {
-        if (!this.formObj.uf) {
-          this.cities = [];
-          return;
-        }
+        this.clearCity();
+        this.cities = [];
+
         await getCities(this.formObj.uf).then(res => this.cities = res);
       },
       async getInitialData() {

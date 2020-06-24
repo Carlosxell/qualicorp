@@ -1,16 +1,17 @@
 <template>
   <div class="c-autoComplete field">
     <label class="label is-small"
-           :for="`auto--${id}`">{{ defaults.label }}</label>
+           :for="defaults.id ? defaults.id : `auto--${id}`">{{ defaults.label }}</label>
     <div class="control">
-      <input @focusout="focusout"
+      <input @change="clearItem"
+             @focusout="focusout"
              @focus="focus"
              @keydown.esc="changeFocus"
              @keydown.40="moveDown"
              @keydown.38="moveUp"
              class="input is-small"
              :disabled="defaults.disabled"
-             :id="`auto--${id}`"
+             :id="defaults.id ? defaults.id : `auto--${id}`"
              :placeholder="defaults.placeholder"
              type="text"
              v-model="selected">
@@ -113,6 +114,11 @@
         this.$emit('OnChange', { ...val });
         return this.focusout();
       },
+      clearItem() {
+        if (!this.selected) {
+          this.$emit('OnChange', { [this.dataProp.labelItem]: '' });
+        }
+      },
       moveDown() {
         let list = this.checkList();
 
@@ -165,10 +171,13 @@
       &_item {
         border-radius: pxToRem(6);
         cursor: pointer;
+        display: inline-block;
         font-size: pxToRem(12);
         font-weight: 500;
         letter-spacing: pxToRem(1);
+        margin-bottom: pxToRem(4);
         padding: pxToRem(4) pxToRem(12);
+        width: 100%;
 
         &--active,
         &:hover {
